@@ -1,6 +1,13 @@
 # Description
 
-This repository is meant to serve as a general template for how to set up new repositories in the JogetOSS organization. 
+Assignment Count Hash Variable Plugin retrieves the running and completed assignment count for the logged in user.
+
+## Available Formats
+* #loggedInUser.runningCount# -> returns the running assignment count
+* #loggedInUser.completedCount# -> returns the completed assignment count
+
+To setup and configure this plugin, please see the [documentation]().
+
 
 # Getting Help
 
