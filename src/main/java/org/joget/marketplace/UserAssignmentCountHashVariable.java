@@ -13,17 +13,37 @@ public class UserAssignmentCountHashVariable extends DefaultHashVariablePlugin {
 
     @Override
     public String processHashVariable(String variableKey) {
-        int count = 0;
         ApplicationContext appContext = AppUtil.getApplicationContext();
         WorkflowUserManager workflowUserManager = (WorkflowUserManager) appContext.getBean("workflowUserManager");
-        String username = workflowUserManager.getCurrentUsername();
         WorkflowManager workflowManager = (WorkflowManager) WorkflowUtil.getApplicationContext().getBean("workflowManager");
-        if ("runningCount".equalsIgnoreCase(variableKey)) {
-            count = workflowManager.getAssignmentSize(null, null, null);
-        } else if ("completedCount".equalsIgnoreCase(variableKey)) {
-            count = workflowManager.getCompletedProcessSize(null, null, null, null, null, username);
+        
+        String appId = null;
+        if (variableKey.contains("[") && variableKey.contains("]")) {
+            appId = variableKey.substring(variableKey.indexOf("[") + 1, variableKey.indexOf("]"));
         }
-        return String.valueOf(count);
+        
+        if (variableKey.contains("runningCount")) {
+            return String.valueOf(
+                    workflowManager.getAssignmentSize(
+                            appId != null ? appId : null, 
+                            null, 
+                            null
+                    )
+            );
+        } else if (variableKey.contains("completedCount")) {
+            return String.valueOf(
+                    workflowManager.getCompletedProcessSize(
+                            appId != null ? appId : null, 
+                            null, 
+                            null, 
+                            null, 
+                            null, 
+                            workflowUserManager.getCurrentUsername()
+                    )
+            );
+        }
+        
+        return null;
     }
 
     @Override
@@ -38,17 +58,17 @@ public class UserAssignmentCountHashVariable extends DefaultHashVariablePlugin {
 
     @Override
     public String getVersion() {
-        return "8.0.0";
+        return "8.0.1";
     }
 
     @Override
     public String getDescription() {
-        return "User Assignment Count Hash Variable";
+        return "Retrieves the assignment count for the current logged in user, either by total count or filtered by app ID.";
     }
 
     @Override
     public String getLabel() {
-        return "User Assignment Count Hash Variable";
+        return getName();
     }
 
     @Override
@@ -65,7 +85,9 @@ public class UserAssignmentCountHashVariable extends DefaultHashVariablePlugin {
     public Collection<String> availableSyntax() {
         Collection<String> syntax = new ArrayList<>();
         syntax.add("loggedInUser.runningCount");
+        syntax.add("loggedInUser.runningCount[APP_ID]");
         syntax.add("loggedInUser.completedCount");
+        syntax.add("loggedInUser.completedCount[APP_ID]");
         return syntax;
     }
 }
