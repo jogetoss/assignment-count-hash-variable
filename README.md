@@ -6,7 +6,7 @@ Assignment Count Hash Variable Plugin retrieves the running and completed assign
 * #loggedInUser.runningCount# -> returns the running assignment count
 * #loggedInUser.completedCount# -> returns the completed assignment count
 
-To setup and configure this plugin, please see the [documentation]().
+To setup and configure this plugin, please see the [documentation](https://dev.joget.org/community/display/marketplace/User+Assignment+Count+Hash+Variable+Plugin).
 
 
 # Getting Help
