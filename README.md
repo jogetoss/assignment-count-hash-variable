@@ -7,8 +7,8 @@ Syntax | Description
 :----: | -----------
 `#loggedInUser.runningCount#` | Returns the running assignment count.
 `#loggedInUser.completedCount#` | Returns the completed assignment count.
-`#loggedInUser.runningCount[appId=x&processDefId=x&activityDefId=x]#` | Returns the running assignment count, can be filtered and/or by app ID, process definition ID, activity definition ID.<br>Example:<br><sub>#loggedInUser.runningCount[appId=expenseclaim&processDefId=process1&activityDefId=approver_claim]#</sub>
-`#loggedInUser.completedCount[appId=x&processDefId=x]#` | Returns the completed assignment count, can be filtered and/or by app ID, process definition ID.<br>Example:<br><sub>#loggedInUser.completedCount[appId=expenseclaim&processDefId=process1]#</sub>
+`#loggedInUser.runningCount<br>[appId=x&processDefId=x&activityDefId=x]#` | Returns the running assignment count, can be filtered and/or by app ID, process definition ID, activity definition ID.<br>Example:<br><sub>#loggedInUser.runningCount[appId=expenseclaim&processDefId=process1&activityDefId=approver_claim]#</sub>
+`#loggedInUser.completedCount<br>[appId=x&processDefId=x]#` | Returns the completed assignment count, can be filtered and/or by app ID, process definition ID.<br>Example:<br><sub>#loggedInUser.completedCount[appId=expenseclaim&processDefId=process1]#</sub>
 
 To setup and configure this plugin, please see the [documentation](https://dev.joget.org/community/display/marketplace/User+Assignment+Count+Hash+Variable+Plugin).
 
