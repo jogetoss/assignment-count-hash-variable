@@ -7,7 +7,6 @@ import org.joget.apps.app.model.DefaultHashVariablePlugin;
 import org.joget.apps.app.service.AppUtil;
 import org.joget.commons.util.StringUtil;
 import org.joget.workflow.model.service.WorkflowManager;
-import org.joget.workflow.shark.model.dao.WorkflowAssignmentDao;
 
 public class UserAssignmentCountHashVariable extends DefaultHashVariablePlugin {
 
@@ -38,6 +37,7 @@ public class UserAssignmentCountHashVariable extends DefaultHashVariablePlugin {
                         : null;
             }
         }
+        String username = workflowManager.getWorkflowUserManager().getCurrentUsername();
         
         if (variableKey.contains("runningCount")) {
             return String.valueOf(
@@ -49,19 +49,16 @@ public class UserAssignmentCountHashVariable extends DefaultHashVariablePlugin {
                     )
             );
         } else if (variableKey.contains("completedCount")) {
-            WorkflowAssignmentDao dao = (WorkflowAssignmentDao) AppUtil.getApplicationContext().getBean("workflowAssignmentDao");
-            return String.valueOf(
-                    (Long) dao.getProcessesSize(
-                            appId, 
-                            processDefId, 
-                            null, 
-                            null, 
-                            null, 
-                            null, 
-                            (workflowManager.getWorkflowUserManager()).getCurrentUsername(), 
-                            "closed"
-                    )
+            int completed = workflowManager.getCompletedProcessSize(
+                appId,
+                processDefId,
+                null,
+                null,
+                null,
+                username 
             );
+
+            return String.valueOf(completed);
         }
         
         return null;
@@ -79,7 +76,7 @@ public class UserAssignmentCountHashVariable extends DefaultHashVariablePlugin {
 
     @Override
     public String getVersion() {
-        return "8.0.2";
+        return "8.0.3";
     }
 
     @Override
